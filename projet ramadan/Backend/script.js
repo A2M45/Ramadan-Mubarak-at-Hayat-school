@@ -57,33 +57,37 @@ document.getElementById("language-toggle")?.addEventListener("click", () => {
   document.getElementById("language-toggle").textContent = newLang === "ar" ? "Français" : "عربي";
 });
 
-// Récupérer les heures de prière via l'API
-fetch('/api/prayer-times')
-  .then(response => response.json())
-  .then(data => {
-    document.getElementById('fajr-time').textContent = data.fajr;
-    document.getElementById('dhuhr-time').textContent = data.dhuhr;
-    document.getElementById('asr-time').textContent = data.asr;
-    document.getElementById('maghrib-time').textContent = data.maghrib;
-    document.getElementById('isha-time').textContent = data.isha;
-  })
-  .catch(error => console.error('Erreur lors de la récupération des heures de prière:', error));
+// Données des heures de prière
+const prayerTimes = {
+  fajr: "05:00",
+  dhuhr: "13:00",
+  asr: "16:30",
+  maghrib: "19:00",
+  isha: "20:30"
+};
 
-// Récupérer les mosquées via l'API
-fetch('/api/mosques')
-  .then(response => response.json())
-  .then(data => {
-    const mosquesList = document.getElementById('mosques-list');
-    if (mosquesList) {
-      mosquesList.innerHTML = ""; // Vider la liste avant d'ajouter de nouveaux éléments
-      data.forEach(mosque => {
-        const li = document.createElement('li');
-        li.textContent = mosque;
-        mosquesList.appendChild(li);
-      });
-    }
-  })
-  .catch(error => console.error('Erreur lors de la récupération des mosquées:', error));
+// Afficher les heures de prière
+document.getElementById('fajr-time').textContent = prayerTimes.fajr;
+document.getElementById('dhuhr-time').textContent = prayerTimes.dhuhr;
+document.getElementById('asr-time').textContent = prayerTimes.asr;
+document.getElementById('maghrib-time').textContent = prayerTimes.maghrib;
+document.getElementById('isha-time').textContent = prayerTimes.isha;
+
+// Données des mosquées
+const mosques = [
+  "مسجد باركي",
+  "مسجد الإمام مالك",
+  "مسجد عبد الحميد بن باديس"
+];
+
+// Afficher les mosquées
+const mosquesList = document.getElementById('mosques-list');
+mosques.forEach(mosque => {
+  const li = document.createElement('li');
+  li.textContent = mosque;
+  mosquesList.appendChild(li);
+});
+
 
 // Initialiser la langue par défaut (arabe)
 changeLanguage("ar");
